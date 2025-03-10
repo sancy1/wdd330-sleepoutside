@@ -100,6 +100,7 @@ import ProductDetails from "./productDetails.mjs";
 
 // Get product ID from URL
 const productId = getParam("product");
+console.log("Product ID from URL:", productId); // Debugging
 
 if (!productId) {
   console.error("Product ID not found in URL");

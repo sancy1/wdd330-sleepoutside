@@ -289,17 +289,46 @@ export default class ProductDetails {
     this.dataSource = dataSource;
   }
 
+  // async init() {
+  //   this.product = await this.dataSource.findProductById(this.productId);
+  //   this.renderProductDetails("main");
+
+  //   // Add event listeners for quantity buttons
+  //   document.getElementById("decreaseQty").addEventListener("click", () => this.adjustQuantity(-1));
+  //   document.getElementById("increaseQty").addEventListener("click", () => this.adjustQuantity(1));
+
+  //   // Add event listener for add to cart button
+  //   document.getElementById("addToCart").addEventListener("click", () => this.addToCart());
+  // }
+
+
   async init() {
-    this.product = await this.dataSource.findProductById(this.productId);
-    this.renderProductDetails("main");
+    console.log("Fetching product with ID:", this.productId); // Debugging
 
-    // Add event listeners for quantity buttons
-    document.getElementById("decreaseQty").addEventListener("click", () => this.adjustQuantity(-1));
-    document.getElementById("increaseQty").addEventListener("click", () => this.adjustQuantity(1));
+    try {
+        const productData = await this.dataSource.findProductById(this.productId);
+        console.log("Product Data:", productData); // Debugging
 
-    // Add event listener for add to cart button
-    document.getElementById("addToCart").addEventListener("click", () => this.addToCart());
-  }
+        // ✅ Ensure the product exists before rendering
+        if (!productData || !productData.Id) {
+            console.error("Product not found with ID:", this.productId);
+            document.querySelector(".tents-product-detail").innerHTML = "<p>Product not found.</p>";
+            return;
+        }
+
+        this.product = productData;  // ✅ Store the product object
+        this.renderProductDetails(".tents-product-detail");
+
+        // ✅ Add event listeners for quantity adjustment and add to cart
+        document.getElementById("decreaseQty").addEventListener("click", () => this.adjustQuantity(-1));
+        document.getElementById("increaseQty").addEventListener("click", () => this.adjustQuantity(1));
+        document.getElementById("addToCart").addEventListener("click", () => this.addToCart());
+
+    } catch (error) {
+        console.error("Error fetching product:", error);
+    }
+}
+
 
   adjustQuantity(change) {
     const quantityInput = document.getElementById("quantity");
@@ -329,8 +358,14 @@ export default class ProductDetails {
   
     alert(`${this.product.Name} (Quantity: ${quantity}) added to cart!`);
   }
+  // renderProductDetails(selector) {
+  //   const element = document.querySelector(selector);
+  //   element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
+  // }
+
   renderProductDetails(selector) {
-    const element = document.querySelector(selector);
+    const element = document.querySelector(".tents-product-detail");
     element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
   }
+  
 }
