@@ -329,13 +329,8 @@ export default class ProductDetails {
   
     alert(`${this.product.Name} (Quantity: ${quantity}) added to cart!`);
   }
-  // renderProductDetails(selector) {
-  //   const element = document.querySelector(selector);
-  //   element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
-  // }
-
   renderProductDetails(selector) {
-    const element = document.querySelector(".tents-product-detail");
+    const element = document.querySelector(selector);
     element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
   }
 }
