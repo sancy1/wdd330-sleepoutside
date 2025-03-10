@@ -1354,3 +1354,104 @@ body {
 .category:active img {
   animation: pulse 0.3s ease;
 }
+
+
+/* CLEAR ITEMS BUTTON ==================================== */
+#clearCart {
+  background-color: #ff4444; 
+  color: white;             
+  border: none;               
+  padding: 10px 20px;         
+  font-size: 16px;            
+  border-radius: 5px;         
+  cursor: pointer;            
+  transition: background-color 0.3s ease; 
+}
+
+#clearCart:hover {
+  background-color: #cc0000;  
+}
+
+#clearCart:active {
+  background-color: #990000; 
+}
+
+
+.clear-text {
+  list-style-type: none;
+  color: #990000;
+}
+
+
+
+/* General styles for the products section */
+.products {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products h2.mycart {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Sorting container */
+.sorting {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+/* Base button styles */
+.sorting button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #007bff; /* Blue color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.sorting button:hover {
+  background-color: #0056b3; /* Darker blue */
+  transform: translateY(-2px); /* Slight lift */
+}
+
+/* Active effect */
+.sorting button:active {
+  transform: translateY(0); /* Reset lift */
+}
+
+/* Focus effect */
+.sorting button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sorting {
+      flex-direction: column; /* Stack buttons vertically on small screens */
+      align-items: center;
+  }
+
+  .sorting button {
+      width: 100%; /* Full-width buttons on small screens */
+      max-width: 300px; /* Limit button width */
+  }
+}
+
+@media (max-width: 480px) {
+  .sorting button {
+      font-size: 0.9rem; /* Slightly smaller text on very small screens */
+      padding: 8px 16px;
+  }
+}
