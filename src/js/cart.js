@@ -59,16 +59,29 @@ function renderCartContents() {
   });
 
   // Update cart total
-  const cartFooter = qs(".cart-footer");
-  const cartTotal = qs(".cart-total");
-  if (cartFooter && cartTotal) {
-      if (cartItems.length > 0) {
-          cartFooter.classList.remove("hide");
-          cartTotal.innerHTML = `Total Items: ${totals.totalItems}<br>Total: $${totals.totalAmount.toFixed(2)}`;
-      } else {
-          cartFooter.classList.add("hide");
-      }
+//   const cartFooter = qs(".cart-footer");
+//   const cartTotal = qs(".cart-total");
+//   if (cartFooter && cartTotal) {
+//       if (cartItems.length > 0) {
+//           cartFooter.classList.remove("hide");
+//           cartTotal.innerHTML = `Total Items: ${totals.totalItems}<br>Total: $${totals.totalAmount.toFixed(2)}`;
+//       } else {
+//           cartFooter.classList.add("hide");
+//       }
+//   }
+// }
+
+const cartFooter = qs(".cart-footer");
+const cartTotal = qs(".cart-total");
+
+if (cartFooter && cartTotal) {
+  if (cartItems.length > 0) {
+    cartFooter.classList.remove("hide");
+    cartTotal.innerHTML = `<span class="total-items-count">Total Items: ${totals.totalItems}</span><br>Total Amount: $${totals.totalAmount.toFixed(2)}`;
+  } else {
+    cartFooter.classList.add("hide");
   }
+}
 }
 
 function deleteItem(event) {
