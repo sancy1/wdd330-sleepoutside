@@ -1,44 +1,76 @@
 
+
 import { getLocalStorage, qs } from "./utils.mjs";
 
+/**
+ * Updates the cart count displayed in the header.
+ * Logs detailed information for debugging purposes.
+ */
 function updateCartCount() {
-    console.log("--- Updating cart count ---");
-    const cartItems = getLocalStorage("so-cart");
-    console.log("localStorage 'so-cart':", cartItems);
+  console.log("--- Starting updateCartCount ---");
 
-    if (!cartItems || !Array.isArray(cartItems)) {
-        console.log("Cart items are empty or not an array. Setting count to 0.");
-        updateCartDisplay(0);
-        return;
-    }
+  // Retrieve cart items from localStorage
+  const cartItems = getLocalStorage("so-cart");
+  console.log("Retrieved cart items from localStorage:", cartItems);
 
-    const totalItems = cartItems.reduce((total, item) => {
-        const qty = item.quantity || 1;
-        console.log(`Item: ${item.Name || 'Unknown'}, Quantity: ${qty}`);
-        return total + qty;
-    }, 0);
+  // If cartItems is null or not an array, set count to 0
+  if (!cartItems || !Array.isArray(cartItems)) {
+    console.warn("Cart items are empty or not an array. Setting count to 0.");
+    updateCartDisplay(0);
+    console.log("--- updateCartCount completed ---");
+    return;
+  }
 
-    console.log("Total items calculated:", totalItems);
-    updateCartDisplay(totalItems);
-    console.log("--- Cart count update complete ---");
+  // Calculate the total number of items in the cart
+  const totalItems = cartItems.reduce((total, item) => {
+    const qty = item.quantity || 1; // Default to 1 if quantity is not set
+    console.log(`Processing item: ${item.Name || 'Unknown'}, Quantity: ${qty}`);
+    return total + qty;
+  }, 0);
+
+  console.log("Total items calculated:", totalItems);
+
+  // Update the cart count display
+  updateCartDisplay(totalItems);
+  console.log("--- updateCartCount completed ---");
 }
 
+/**
+ * Updates the cart count display in the DOM.
+ * @param {number} count - The total number of items in the cart.
+ */
 function updateCartDisplay(count) {
-    const cartCountElement = qs(".cart-count");
-    console.log("Cart count element:", cartCountElement);
-    if (cartCountElement) {
-        cartCountElement.textContent = count;
-        cartCountElement.style.display = count > 0 ? "flex" : "none";
-    } else {
-        console.error("Cart count element not found!");
-    }
+  console.log("--- Starting updateCartDisplay ---");
+  console.log("Count to display:", count);
+
+  // Find the cart count element in the DOM
+  const cartCountElement = qs(".cart-count");
+  console.log("Cart count element:", cartCountElement);
+
+  if (cartCountElement) {
+    // Update the text content and visibility of the cart count element
+    cartCountElement.textContent = count;
+    cartCountElement.style.display = count > 0 ? "flex" : "none";
+    console.log("Cart count updated successfully.");
+  } else {
+    console.error("Cart count element not found in the DOM!");
+  }
+
+  console.log("--- updateCartDisplay completed ---");
 }
 
+/**
+ * Adds a listener for the 'cart-change' event and calls the provided callback.
+ * @param {Function} callback - The function to call when the 'cart-change' event is triggered.
+ */
 function addCartListener(callback) {
-    window.addEventListener("cart-change", callback);
+  console.log("Adding 'cart-change' event listener...");
+  window.addEventListener("cart-change", callback);
+  console.log("'cart-change' event listener added successfully.");
 }
 
-// remove the dom content call, so that the function is only called after the header loads.
+// Add the updateCartCount function as a listener for the 'cart-change' event
 addCartListener(updateCartCount);
 
+// Export the functions for use in other modules
 export { updateCartCount, addCartListener };

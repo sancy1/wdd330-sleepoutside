@@ -42,3 +42,4 @@ if (!productId) {
     alert("Item added to cart successfully!");
   }
 }
+

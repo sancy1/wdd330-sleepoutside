@@ -80,3 +80,24 @@ export async function loadHeaderFooter() {
   // Call updateCartCount after header is loaded
   updateCartCount();
 }
+
+
+// Breadcrumbs
+export function setBreadcrumb(category, productName, productCount) {
+  const breadcrumbElement = document.getElementById("breadcrumb");
+  if (!breadcrumbElement) return;
+
+  let breadcrumbText = "";
+
+  if (category && productCount !== undefined) {
+    breadcrumbText = `${category}->(${productCount} items)`;
+  } else if (category && productName) {
+    breadcrumbText = `${category}->${productName}`;
+  } else if (category) {
+    breadcrumbText = `${category}`;
+  } else {
+    breadcrumbText = ""; // No breadcrumb on the home page
+  }
+
+  breadcrumbElement.textContent = breadcrumbText;
+}
